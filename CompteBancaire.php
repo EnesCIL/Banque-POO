@@ -54,22 +54,19 @@ class CompteBancaire{
         $this->_soldeInitial += $montant;
     }
 
-    public function compteDebiter($montant){
-        if($montant <=0){
-            echo "montant doit être supérieur à zéro";
-            return;
-        }else ( $this->_soldeInitial -= $montant){
-           echo "Débit de $montant £";
-        return;  
+    public function compteDebiter($montant) {
+        if ($montant > $this->_soldeInitial) {
+            return ;
+        } else {
+            $this->_soldeInitial -= $montant;
+            return ;
         }
-  
     }
 
-    // public function compteVirement(){
-
-    // }
-    
-
-
+    public function compteVirement($montant, $compteDestinataire) {
+        compteDebiter($montant);
+        $compteDestinataire->compteCrediter($montant);
+        return ;
+  
 }
 ?>
