@@ -54,7 +54,7 @@ class CompteBancaire{
     }
 
     public function __toString(){
-        return $this->_libelle.' '.$this->_soldeInitial.' '.$this->_devise;
+        return $this->_libelle.' '.$this->_soldeInitial.' '.$this->_devise.' '.$this->getPrenomTitulaire().' '.$this->getNomTitulaire() ;
     }
 
     public function compteCrediter($montant){
