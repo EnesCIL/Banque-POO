@@ -42,6 +42,13 @@ class CompteBancaire{
         return $this->_titulaire;
     }
 
+    public function getPrenomTitulaire() {
+        return $this->getTitulaire()->getPrenom();
+    }
+    public function getNomTitulaire() {
+        return $this->getTitulaire()->getNom();
+    }
+
     public function setTitulaire(){
         $this->_titulaire = $titulaire;
     }
@@ -52,21 +59,29 @@ class CompteBancaire{
 
     public function compteCrediter($montant){
         $this->_soldeInitial += $montant;
+        return "$montant {$this->_devise} est bien ajouter au  {$this->_libelle}";
     }
 
     public function compteDebiter($montant) {
         if ($montant > $this->_soldeInitial) {
-            return ;
+            return "le solde est insuffisant sur {$this->_libelle}.";
         } else {
             $this->_soldeInitial -= $montant;
-            return ;
+            return "compte débiter de $montant , nouveau solde {$this->_soldeInitial} {$this->_devise}.";
         }
     }
 
     public function compteVirement($montant, $compteDestinataire) {
-        compteDebiter($montant);
+        if ($montant > $this->_soldeInitial) {
+            return "le solde est insuffisant sur {$this->_libelle}.";
+        } else {
+        $this->compteDebiter($montant);
         $compteDestinataire->compteCrediter($montant);
-        return ;
+        return "Virement de $montant {$this->_devise} effectué du {$this->_libelle} de {$this->getPrenomTitulaire()} {$this->getNomTitulaire()} vers $compteDestinataire. Nouveau solde : {$this->_soldeInitial} {$this->_devise}.";
   
+        }
+    }
+
+    
 }
 ?>

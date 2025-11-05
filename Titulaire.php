@@ -2,7 +2,7 @@
 class Titulaire{
     private string $_nom;
     private string $_prenom;
-    private DateTime $_dateNaissance;
+    private string $_dateNaissance;
     private string $_ville;
     //ensemble compte bancaires
     private array $_comptes;
@@ -10,7 +10,7 @@ class Titulaire{
     public function __construct($nom, $prenom, $dateNaissance, $ville){
         $this->_nom = $nom;
         $this->_prenom = $prenom;
-        $this->_dateNaissance= new DateTime($dateNaissance);
+        $this->_dateNaissance= $dateNaissance;
         $this->_ville = $ville;
         $this->_comptes= [];
         
@@ -45,11 +45,18 @@ class Titulaire{
     }
 
     public function __toString(){
-        return $this->_nom.' '.$this->_prenom.' '.$this->_dateNaissance->format('d-m-Y').' '.$this->$ville;
+        return $this->_nom.' '.$this->_prenom.' '.$this->_dateNaissance.' '.$this->_ville;
     } 
+    
+    public function calculerAge(){
+        $dateNow = new DateTime();
+        $dateNaissanceActu = new DateTime($this->_dateNaissance);
+        $age = $dateNow->diff($dateNaissanceActu)->format('%Y');
+        return $age. ' ans';
+        }
 
     public function afficherComptes(){
-        echo $this->_nom.' '.$this->_prenom.' '."<br>";
+        echo $this->_nom.' '.$this->_prenom.' '.$this->_dateNaissance.' '.$this->calculerAge().' '.$this->_ville."<br>" ;
         $result="";
         foreach ($this->_comptes as $compte){
             $result .= $compte."<br>";
